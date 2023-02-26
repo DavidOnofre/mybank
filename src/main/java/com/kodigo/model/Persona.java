@@ -19,7 +19,7 @@ public class Persona {
 	private Integer idPersona;
 
 	@NotNull
-	@Size(min = 3, message = "Nombres debe tener minimo 3 caracteres")
+	@Size(min = 3, message = "Nombres debe tener mínimo 3 caracteres")
 	@Column(name = "nombre", nullable = false, length = 70)
 	private String nombre;
 
@@ -33,17 +33,17 @@ public class Persona {
 	private Integer edad;
 
 	@NotNull
-	@Size(min = 10, max = 10, message = "Identificacion debe tener 10 caracteres")
+	@Size(min = 10, max = 10, message = "Identificación debe tener 10 caracteres")
 	@Column(name = "identificacion", nullable = false, length = 10)
 	private String identificacion;
 
 	@NotNull
-	@Size(max = 150, message = "Direccion acepta hasta 150 caracteres")
+	@Size(max = 150, message = "Dirección acepta hasta 150 caracteres")
 	@Column(name = "direccion", nullable = false, length = 150)
 	private String direccion;
 
 	@NotNull
-	@Size(min = 10, max = 10, message = "Identificacion debe tener 10 caracteres")
+	@Size(min = 10, max = 10, message = "Identificación debe tener 10 caracteres")
 	@Column(name = "telefono", nullable = false, length = 10)
 	private String telefono;
 

@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "cliente")
@@ -19,9 +21,12 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idCliente;
 
+	@NotNull
+	@Size(min = 8, message = "Clave debe tener mínimo 8 caracteres")
 	@Column(name = "clave", nullable = false, length = 70)
 	private String clave;
 
+	@NotNull
 	@Column(name = "estado", nullable = false)
 	private Boolean estado;
 	
