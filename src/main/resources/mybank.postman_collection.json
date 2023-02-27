@@ -1,0 +1,160 @@
+{
+	"info": {
+		"_postman_id": "f87d125d-e410-465d-80ae-4ca915b9eeac",
+		"name": "mybank",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "personas",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Dario Onofre\",\n    \"genero\": \"M\",\n    \"edad\": 33,\n    \"identificacion\": \"1719382987\",\n    \"direccion\": \"Mercado mayorista\",\n    \"telefono\": \"0955569878\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/personas/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"personas",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "clientes",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"clave\": \"1234567891\",\n    \"estado\": true,\n    \"persona\": {\n        \"nombre\": \"David Onofre\",\n        \"genero\": \"M\",\n        \"edad\": 34,\n        \"identificacion\": \"1719382986\",\n        \"direccion\": \"Mercado mayorista\",\n        \"telefono\": \"0955569878\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/clientes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"clientes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cuentas",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"numeroCuenta\": \"2234565899\",\n    \"tipoCuenta\": \"CTE\",\n    \"saldoInicial\": \"2000\",\n    \"estado\": true,\n    \"cliente\": {\n        \"idCliente\": 1\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/cuentas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"cuentas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "movimientos",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fecha\": \"2023-02-26T05:00:00.000Z\",\n    \"tipoMovimiento\": \"retiro\",\n    \"valor\": 100,\n    \"cuenta\": {\n        \"idCuenta\": 1\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/movimientos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"movimientos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "movimientos/reporte",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"idCliente\": 1,\n    \"fechaDesde\": \"2023-02-24T05:00\",\n    \"fechaHasta\": \"2023-02-24T05:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/movimientos/reporte",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"movimientos",
+						"reporte"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
