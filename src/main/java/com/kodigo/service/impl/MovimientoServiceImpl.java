@@ -59,16 +59,16 @@ public class MovimientoServiceImpl extends CRUDImpl<Movimiento, Integer> impleme
 	private void registrarMovimiento(Movimiento movimiento, Cuenta cuenta) {
 		switch (movimiento.getTipoMovimiento()) {
 		case "retiro":
-
+			
 			movimiento.setSaldo(cuenta.getSaldoDisponible());
 			movimientoRepo.save(movimiento);
-
+			
 			break;
 		case "deposito":
-
+			
 			movimiento.setSaldo(cuenta.getSaldoDisponible());
 			movimientoRepo.save(movimiento);
-
+			
 			break;
 		default:
 			throw new ModeloNotFoundException("valor tipoMovimiento no valido");
@@ -88,10 +88,13 @@ public class MovimientoServiceImpl extends CRUDImpl<Movimiento, Integer> impleme
 
 			cuenta.setSaldoDisponible(cuenta.getSaldoDisponible().subtract(movimiento.getValor()));
 			cuentaRepo.save(cuenta);
+			
 			break;
 		case "deposito":
+			
 			cuenta.setSaldoDisponible(cuenta.getSaldoDisponible().add(movimiento.getValor()));
 			cuentaRepo.save(cuenta);
+			
 			break;
 		}
 
