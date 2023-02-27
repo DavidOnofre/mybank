@@ -1,6 +1,7 @@
 package com.kodigo.service.impl;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -11,9 +12,13 @@ import org.springframework.stereotype.Service;
 import com.kodigo.exception.ModeloNotFoundException;
 import com.kodigo.model.Cuenta;
 import com.kodigo.model.Movimiento;
+import com.kodigo.model.Persona;
+import com.kodigo.model.dto.MovimientoDTO;
+import com.kodigo.model.dto.ReporteDTO;
 import com.kodigo.repo.ICuentaRepo;
 import com.kodigo.repo.IGenericRepo;
 import com.kodigo.repo.IMovimientoRepo;
+import com.kodigo.repo.IPersonaRepo;
 import com.kodigo.service.IMovimientoService;
 
 @Service
@@ -24,6 +29,9 @@ public class MovimientoServiceImpl extends CRUDImpl<Movimiento, Integer> impleme
 
 	@Autowired
 	private ICuentaRepo cuentaRepo;
+
+	@Autowired
+	private IPersonaRepo personaRepo;
 
 	@Override
 	protected IGenericRepo<Movimiento, Integer> getRepo() {
@@ -87,6 +95,42 @@ public class MovimientoServiceImpl extends CRUDImpl<Movimiento, Integer> impleme
 			break;
 		}
 
+	}
+
+	@Override
+	public MovimientoDTO generarReporte(ReporteDTO parametrosDTO) {
+
+		MovimientoDTO dto = new MovimientoDTO();
+		List<Movimiento> movimientos = movimientoRepo.buscarPorFecha(parametrosDTO.getFechaDesde(),
+				parametrosDTO.getFechaHasta());
+
+		for (Movimiento movimiento : movimientos) {
+			if (movimiento.getCuenta().getCliente().getIdCliente() == parametrosDTO.getIdCliente()) {
+
+				Persona persona = obtenerPersona(parametrosDTO.getIdCliente());
+				Cuenta cuenta = obtenerCuenta(movimiento.getCuenta().getIdCuenta());
+				dto.setCliente(persona.getNombre());
+				dto.setNumeroCuenta(cuenta.getNumeroCuenta());
+				dto.setTipoMovimiento(movimiento.getTipoMovimiento());
+				dto.setSaldoInicial(cuenta.getSaldoInicial());
+				dto.setEstado(cuenta.getEstado());
+				dto.setSaldoDisponible(cuenta.getSaldoDisponible());
+				dto.setFecha(movimiento.getFecha());
+				dto.setValor(movimiento.getValor());
+			}
+		}
+
+		return dto;
+	}
+
+	private Cuenta obtenerCuenta(Integer idCuenta) {
+		Optional<Cuenta> cuentaOptional = cuentaRepo.findById(idCuenta);
+		return cuentaOptional.get();
+	}
+
+	private Persona obtenerPersona(Integer idCliente) {
+		Optional<Persona> optional = personaRepo.findById(idCliente);
+		return optional.get();
 	}
 
 }

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kodigo.exception.ModeloNotFoundException;
 import com.kodigo.model.Movimiento;
+import com.kodigo.model.dto.MovimientoDTO;
+import com.kodigo.model.dto.ReporteDTO;
 import com.kodigo.service.IMovimientoService;
 
 @RestController
@@ -32,7 +34,19 @@ public class MovimientoController {
 		List<Movimiento> lista = service.listar();
 		return new ResponseEntity<List<Movimiento>>(lista, HttpStatus.OK);
 	}
-
+	
+	@GetMapping("/reporte")
+	public ResponseEntity<MovimientoDTO> reporteMovimientos(@RequestBody ReporteDTO dto) throws Exception{
+		MovimientoDTO obj = service.generarReporte(dto);
+		
+		if(obj.getCliente() == null) {
+			throw new ModeloNotFoundException("id no encontrado: " + dto.getIdCliente());
+		}
+		
+		return new ResponseEntity<MovimientoDTO>(obj, HttpStatus.OK);
+	}
+	
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<Movimiento> listarPorId(@PathVariable("id") Integer id) throws Exception{
 		Movimiento obj = service.listarPorId(id);
@@ -46,7 +60,6 @@ public class MovimientoController {
 	
 	@PostMapping
 	public ResponseEntity<Movimiento> registrar(@Valid @RequestBody Movimiento movimiento) throws Exception{
-		//Movimiento obj = service.registrar(movimiento);
 		Movimiento obj = service.registrarTransaccional(movimiento);
 		
 		return new ResponseEntity<Movimiento>(obj, HttpStatus.CREATED);
