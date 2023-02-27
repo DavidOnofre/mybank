@@ -83,7 +83,7 @@ public class MovimientoServiceImpl extends CRUDImpl<Movimiento, Integer> impleme
 
 			BigDecimal saldoRetiro = cuenta.getSaldoDisponible().subtract(movimiento.getValor());
 			if (saldoRetiro.compareTo(BigDecimal.ZERO) <= 0) {
-				throw new ModeloNotFoundException("Saldo no disponible");
+				throw new ModeloNotFoundException("Saldo no disponible.");
 			}
 
 			cuenta.setSaldoDisponible(cuenta.getSaldoDisponible().subtract(movimiento.getValor()));
